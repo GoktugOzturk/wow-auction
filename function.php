@@ -44,6 +44,10 @@ function checkForAuctionUpdate()
 
 function findItemAuctions($itemId)
 {
+    if (!file_exists(BASE_PATH . "data/auctions")) {
+        echo '<div class="alert alert-danger" role="alert">Auction DB File Not Found</div>';
+        return array();
+    }
     $auctionData = file_get_contents(BASE_PATH . "data/auctions");
     // {"auc":2125280144,"item":22791,"owner":"Ethansa","ownerRealm":"TarrenMill","bid":2867840,"buyout":3018780,"quantity":20,"timeLeft":"LONG","rand":0,"seed":1012116736,"context":0},
     preg_match_all('@\{"auc":[0-9]+,"item":' . $itemId . ',[^\}]+\}@', $auctionData, $auction_match);
